@@ -9,6 +9,10 @@ function dot(game, parent) {
 var Robot = function(game, x, y) {
   Phaser.Sprite.call(this, game, x, y, 'body');
 
+  this.col = 0;
+  this.initY = y - 24;
+  this.angle = 15;
+
   // Arm
   this.arm = this.game.add.group(this);
   this.arm.position.set(12, 13);
@@ -24,10 +28,7 @@ var Robot = function(game, x, y) {
   this.frArm.angle -= 120;
 
   this.pivot.set(16, 48);
-  this.position.set(x + 32, y - 24);
-
-  this.col = 0;
-  this.angle = 15;
+  this.position.set(x + 32, this.initY);
 
   return this;
 };
@@ -37,8 +38,8 @@ Robot.prototype.constructor = Robot;
 
 Robot.prototype.update = function() {
   // Hover
-  var dy = 0.3 * Math.sin(5 * this.game.time.totalElapsedSeconds());
-  this.position.y += dy;
+  var dy = 4 * Math.sin(5 * this.game.time.totalElapsedSeconds());
+  this.position.y = this.initY + dy;
 };
 
 Robot.prototype.move = function(col) {
@@ -54,11 +55,11 @@ Robot.prototype.move = function(col) {
   return this;
 };
 
-Robot.prototype.forward = function(col) {
+Robot.prototype.moveForward = function(col) {
   return this.move(this.col + 1);
 };
 
-Robot.prototype.backward = function(col) {
+Robot.prototype.moveBackward = function(col) {
   return this.move(this.col - 1);
 };
 

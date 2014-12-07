@@ -1,3 +1,5 @@
+require('./blocks.js');
+
 var Robot = require('./robot');
 
 var App = function() {
@@ -20,6 +22,8 @@ var App = function() {
   this.editPane = document.getElementById('edit');
   document.getElementById('toggle-edit')
     .addEventListener('click', this.toggleEdit.bind(this));
+  document.getElementById('test')
+    .addEventListener('click', this.test.bind(this));
   return this;
 };
 
@@ -51,6 +55,11 @@ App.prototype.resize = function() {};
 
 App.prototype.toggleEdit = function() {
   this.editPane.classList.toggle('toggled');
+};
+
+App.prototype.test = function() {
+  var code = Blockly.JavaScript.workspaceToCode();
+  eval(code);
 };
 
 module.exports = (function() {

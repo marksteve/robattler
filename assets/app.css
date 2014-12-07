@@ -1,3 +1,8 @@
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
 body, button {
   font: 16px/1.5 Silkscreen, sans-serif;
 }
@@ -10,6 +15,7 @@ button {
   background: black;
   color: white;
   border: 0;
+  padding: 0 10px;
 }
 button:active,
 button:focus {
@@ -18,15 +24,31 @@ button:focus {
 button:active {
   background: dodgerblue;
 }
+button:hover {
+  background: darkgray;
+}
 #edit {
   opacity: 0.9;
   position: fixed;
-  top: -45%;
   width: 100%;
-  text-align: center;
-  transition: top 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  top: -410px;
 }
 #edit.toggled {
   top: 0;
-  bottom: 50%;
+}
+#edit .wrapper {
+  border: 10px black solid;
+}
+#blockly {
+  height: 400px;
+}
+#toggle-edit {
+  margin-left: 20px;
+}
+#test {
+  background: forestgreen;
+}
+#test:hover {
+  background: limegreen;
 }

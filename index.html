@@ -6,31 +6,52 @@
 </head>
 <body>
   <div id="edit">
-    <div id="blockly"></div>
-    <button id="toggle-edit">Toggle Edit Panel</button>
+    <div class="wrapper">
+      <div id="blockly"></div>
+    </div>
+    <button id="toggle-edit">PROGRAM YOUR BOT</button>
+    <button id="test">TEST</button>
   </div>
   <div id="stage"></div>
   <script src="bower_components/blockly/blockly_compressed.js"></script>
   <script src="bower_components/blockly/blocks_compressed.js"></script>
+  <script src="bower_components/blockly/javascript_compressed.js"></script>
   <script src="bower_components/blockly/msg/js/en.js"></script>
   <script src="bower_components/phaser/build/phaser.js"></script>
   <script src="dist/main.js"></script>
   <xml id="toolbox" style="display: none">
-    <block type="controls_if"></block>
-    <block type="controls_repeat_ext"></block>
-    <block type="logic_compare"></block>
-    <block type="math_number"></block>
-    <block type="math_arithmetic"></block>
-    <block type="text"></block>
-    <block type="text_print"></block>
+    <category name="Logic">
+      <block type="controls_if"></block>
+      <block type="logic_boolean"></block>
+      <block type="logic_compare"></block>
+      <block type="logic_operation"></block>
+    </category>
+    <category name="Loops">
+      <block type="controls_whileUntil"></block>
+      <block type="controls_flow_statements"></block>
+      <block type="controls_repeat"></block>
+    </category>
+    <category name="Math">
+      <block type="math_number"></block>
+      <block type="math_arithmetic"></block>
+    </category>
+    <category name="Movement">
+      <block type="move_forward"></block>
+      <block type="move_backward"></block>
+      <block type="rotate"></block>
+    </category>
+    <category name="Arm">
+      <block type="punch"></block>
+      <block type="hammer"></block>
+    </category>
+    <category name="Laser">
+    </category>
   </xml>
   <script>
     var app = require('koding-hackathon');
     Blockly.inject(
       document.getElementById('blockly'),
-      {
-        toolbox: document.getElementById('toolbox')
-      }
+      { toolbox: document.getElementById('toolbox') }
     );
   </script>
 </body>
