@@ -13,6 +13,7 @@
     "tests"
   ],
   "dependencies": {
-    "phaser": "~2.2.0"
+    "phaser": "~2.2.0",
+    "blockly": "google/blockly"
   }
 }

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "watchify -r ./src/main.js:koding-test -o dist/main.js -v"
+    "watch": "watchify -r ./src/main.js:koding-hackathon -o dist/main.js -v"
   },
   "author": "",
   "dependencies": {

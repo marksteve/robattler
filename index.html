@@ -1,15 +1,37 @@
 <!doctype html>
 <html>
 <head>
-  <style>
-    body { background: #333; overflow: hidden; margin: 0; padding: 0; }
-  </style>
+  <link rel="stylesheet" href="assets/fonts/silkscreen.css">
+  <link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
+  <div id="edit">
+    <div id="blockly"></div>
+    <button id="toggle-edit">Toggle Edit Panel</button>
+  </div>
+  <div id="stage"></div>
+  <script src="bower_components/blockly/blockly_compressed.js"></script>
+  <script src="bower_components/blockly/blocks_compressed.js"></script>
+  <script src="bower_components/blockly/msg/js/en.js"></script>
   <script src="bower_components/phaser/build/phaser.js"></script>
   <script src="dist/main.js"></script>
+  <xml id="toolbox" style="display: none">
+    <block type="controls_if"></block>
+    <block type="controls_repeat_ext"></block>
+    <block type="logic_compare"></block>
+    <block type="math_number"></block>
+    <block type="math_arithmetic"></block>
+    <block type="text"></block>
+    <block type="text_print"></block>
+  </xml>
   <script>
-    var app = require('koding-test');
+    var app = require('koding-hackathon');
+    Blockly.inject(
+      document.getElementById('blockly'),
+      {
+        toolbox: document.getElementById('toolbox')
+      }
+    );
   </script>
 </body>
 </html>

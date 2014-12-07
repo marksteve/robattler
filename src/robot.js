@@ -26,7 +26,6 @@ var Robot = function(game, x, y) {
   this.pivot.set(16, 48);
   this.position.set(x + 32, y - 24);
 
-  this.oldCol = 0;
   this.col = 0;
   this.angle = 15;
 
@@ -40,14 +39,67 @@ Robot.prototype.update = function() {
   // Hover
   var dy = 0.3 * Math.sin(5 * this.game.time.totalElapsedSeconds());
   this.position.y += dy;
-  // Move
-  var d = 64 * this.col - this.x + 32;
-  this.body.velocity.x = d;
-  if (this.oldCol !== this.col) {
-    this.angle = Math.sin(
-      Math.PI * d / (64 * (this.oldCol - this.col))
-    ) * 45 + 15;
-  }
+};
+
+Robot.prototype.move = function(col) {
+  this.game.add.tween(this).to(
+    {x: col * 64 + 32}, 1000, Phaser.Easing.Quadratic.InOut
+  ).start();
+  this.game.add.tween(this).to(
+    {angle: 45}, 500, Phaser.Easing.Quadratic.InOut
+  ).to(
+    {angle: 15}, 500, Phaser.Easing.Quadratic.InOut
+  ).start();
+  this.col = col;
+  return this;
+};
+
+Robot.prototype.forward = function(col) {
+  return this.move(this.col + 1);
+};
+
+Robot.prototype.backward = function(col) {
+  return this.move(this.col - 1);
+};
+
+Robot.prototype.punch = function() {
+  this.game.add.tween(this.arm).to(
+    {angle: -30}, 200, Phaser.Easing.Back.In
+  ).to(
+    {angle: -90}, 200, Phaser.Easing.Back.Out
+  ).to(
+    {angle: -30}, 200, Phaser.Easing.Back.InOut
+  ).start();
+
+  this.game.add.tween(this.frArm).to(
+    {angle: -120}, 200, Phaser.Easing.Back.In
+  ).to(
+    {angle: -15}, 200, Phaser.Easing.Back.Out
+  ).to(
+    {angle: -120}, 200, Phaser.Easing.Back.InOut
+  ).start();
+
+  return this;
+};
+
+Robot.prototype.hammer = function() {
+  this.game.add.tween(this.arm).to(
+    {angle: -220}, 200, Phaser.Easing.Back.In
+  ).to(
+    {angle: -90}, 200, Phaser.Easing.Back.Out, false, 150
+  ).to(
+    {angle: -30}, 200, Phaser.Easing.Back.InOut, false, 200
+  ).start();
+
+  this.game.add.tween(this.frArm).to(
+    {angle: 0}, 200, Phaser.Easing.Back.In
+  ).to(
+    {angle: -30}, 200, Phaser.Easing.Back.Out, false, 150
+  ).to(
+    {angle: -120}, 200, Phaser.Easing.Back.InOut, false, 200
+  ).start();
+
+  return this;
 };
 
 module.exports = Robot;

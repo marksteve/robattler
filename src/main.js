@@ -5,7 +5,7 @@ var App = function() {
     320,
     240,
     Phaser.AUTO,
-    '',
+    'stage',
     {
       init: this.init,
       preload: this.preload,
@@ -17,6 +17,9 @@ var App = function() {
     false, // transparent
     false  // antialias
   );
+  this.editPane = document.getElementById('edit');
+  document.getElementById('toggle-edit')
+    .addEventListener('click', this.toggleEdit.bind(this));
   return this;
 };
 
@@ -27,10 +30,10 @@ App.prototype.init = function() {
 };
 
 App.prototype.preload = function() {
-  this.game.stage.backgroundColor = '#ddd';
-  this.game.load.image('body', 'assets/body.png');
-  this.game.load.image('shoulder-arm', 'assets/shoulder-arm.png');
-  this.game.load.image('fore-arm', 'assets/fore-arm.png');
+  this.stage.backgroundColor = '#ddd';
+  this.load.image('body', 'assets/body.png');
+  this.load.image('shoulder-arm', 'assets/shoulder-arm.png');
+  this.load.image('fore-arm', 'assets/fore-arm.png');
 };
 
 App.prototype.create = function() {
@@ -44,11 +47,10 @@ App.prototype.update = function() {};
 App.prototype.render = function() {};
 App.prototype.resize = function() {};
 
-// Actions
+// DOM Methods
 
-App.prototype.move = function(col) {
-  this.game.player.oldCol = this.game.player.col;
-  this.game.player.col = col;
+App.prototype.toggleEdit = function() {
+  this.editPane.classList.toggle('toggled');
 };
 
 module.exports = (function() {

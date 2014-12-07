@@ -1,0 +1,32 @@
+body, button {
+  font: 16px/1.5 Silkscreen, sans-serif;
+}
+body {
+  background: #333;
+  margin: 0;
+  padding: 0;
+}
+button {
+  background: black;
+  color: white;
+  border: 0;
+}
+button:active,
+button:focus {
+  outline: none;
+}
+button:active {
+  background: dodgerblue;
+}
+#edit {
+  opacity: 0.9;
+  position: fixed;
+  top: -45%;
+  width: 100%;
+  text-align: center;
+  transition: top 0.2s ease-in-out;
+}
+#edit.toggled {
+  top: 0;
+  bottom: 50%;
+}
