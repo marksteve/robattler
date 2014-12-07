@@ -6,17 +6,11 @@ function dot(game, parent) {
   parent.add(g);
 }
 
-var Robot = function(game, x, y) {
-  Phaser.Sprite.call(this, game, x, y, 'body');
+var Robot = function(game, enemy) {
+  this.initX = enemy ? 310 : 10;
+  this.initY = game.world.bounds.bottom - 24;
 
-  this.initX = x;
-  this.initY = y - 24;
-  this.angle = 15;
-
-  this.arenaX = 0;
-  this.hp = 100;
-  this.ap = 10;
-  this.maxAP = 15;
+  Phaser.Sprite.call(this, game, this.initX, this.initY, 'body');
 
   // Arm
   this.arm = this.game.add.group(this);
@@ -32,8 +26,21 @@ var Robot = function(game, x, y) {
   this.frArm.anchor.set(0.5, 0.18);
   this.frArm.angle -= 120;
 
+  // Body
+  this.angle = 15;
   this.pivot.set(16, 48);
-  this.position.set(this.initX, this.initY);
+
+  this.arenaX = 0;
+  this.hp = 100;
+  this.ap = 10;
+  this.maxAP = 15;
+  this.enemy = enemy;
+
+  // Enemy
+  if (this.enemy) {
+    this.scale.x *= -1;
+    this.angle *= -1;
+  }
 
   return this;
 };
@@ -48,16 +55,21 @@ Robot.prototype.update = function() {
 };
 
 Robot.prototype.move = function(arenaX) {
-  if (arenaX < 0 || arenaX > 4) {
+  var maxArenaX = 8 - this.game[
+    this.enemy ? 'player' : 'enemy'
+  ].arenaX;
+  if (arenaX < 0 || arenaX > maxArenaX) {
     return;
   }
+  var f = this.enemy ? -1 : 1;
+  var newX = this.initX + f * arenaX * 30;
   this.game.add.tween(this).to(
-    {x: arenaX * 30 + this.initX}, 1000, Phaser.Easing.Quadratic.InOut
+    {x: newX}, 1000, Phaser.Easing.Quadratic.InOut
   ).start();
   this.game.add.tween(this).to(
-    {angle: 30}, 500, Phaser.Easing.Quadratic.InOut
+    {angle: f * 30}, 500, Phaser.Easing.Quadratic.InOut
   ).to(
-    {angle: 15}, 500, Phaser.Easing.Quadratic.InOut
+    {angle: f * 15}, 500, Phaser.Easing.Quadratic.InOut
   ).start();
   this.arenaX = arenaX;
   return this;

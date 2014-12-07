@@ -42,15 +42,17 @@ App.prototype.preload = function() {
 
 App.prototype.create = function() {
   this.game.physics.startSystem(Phaser.Physics.ARCADE);
-  this.game.player = new Robot(this.game, 10, this.game.world.bounds.bottom);
-  this.game.player.move(2);
+  this.game.player = new Robot(this.game);
   this.game.add.existing(this.game.player);
-  this.game.physics.arcade.enable(this.game.player);
+  this.game.enemy = new Robot(this.game, true);
+  this.game.add.existing(this.game.enemy);
+
+  this.game.player.move(2);
+  this.game.enemy.move(2);
 };
 
 App.prototype.update = function() {};
 App.prototype.render = function() {};
-App.prototype.resize = function() {};
 
 // DOM Methods
 
