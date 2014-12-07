@@ -43,6 +43,10 @@ button:hover {
 #blockly {
   height: 400px;
 }
+.blocklyText,
+.blocklyTreeLabel {
+  font-family: Silkscreen, sans-serif !important;
+}
 #toggle-edit {
   margin-left: 20px;
 }
