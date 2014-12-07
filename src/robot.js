@@ -9,9 +9,14 @@ function dot(game, parent) {
 var Robot = function(game, x, y) {
   Phaser.Sprite.call(this, game, x, y, 'body');
 
-  this.col = 0;
+  this.initX = x;
   this.initY = y - 24;
   this.angle = 15;
+
+  this.arenaX = 0;
+  this.hp = 100;
+  this.ap = 10;
+  this.maxAP = 15;
 
   // Arm
   this.arm = this.game.add.group(this);
@@ -28,7 +33,7 @@ var Robot = function(game, x, y) {
   this.frArm.angle -= 120;
 
   this.pivot.set(16, 48);
-  this.position.set(x + 32, this.initY);
+  this.position.set(this.initX, this.initY);
 
   return this;
 };
@@ -42,25 +47,28 @@ Robot.prototype.update = function() {
   this.position.y = this.initY + dy;
 };
 
-Robot.prototype.move = function(col) {
+Robot.prototype.move = function(arenaX) {
+  if (arenaX < 0 || arenaX > 4) {
+    return;
+  }
   this.game.add.tween(this).to(
-    {x: col * 64 + 32}, 1000, Phaser.Easing.Quadratic.InOut
+    {x: arenaX * 30 + this.initX}, 1000, Phaser.Easing.Quadratic.InOut
   ).start();
   this.game.add.tween(this).to(
-    {angle: 45}, 500, Phaser.Easing.Quadratic.InOut
+    {angle: 30}, 500, Phaser.Easing.Quadratic.InOut
   ).to(
     {angle: 15}, 500, Phaser.Easing.Quadratic.InOut
   ).start();
-  this.col = col;
+  this.arenaX = arenaX;
   return this;
 };
 
-Robot.prototype.moveForward = function(col) {
-  return this.move(this.col + 1);
+Robot.prototype.moveForward = function(arenaX) {
+  return this.move(this.arenaX + 1);
 };
 
-Robot.prototype.moveBackward = function(col) {
-  return this.move(this.col - 1);
+Robot.prototype.moveBackward = function(arenaX) {
+  return this.move(this.arenaX - 1);
 };
 
 Robot.prototype.punch = function() {

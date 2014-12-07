@@ -2,7 +2,7 @@
 
 Blockly.Blocks.move_forward = {
   init: function() {
-    this.setColour(120);
+    this.setColour(290);
     this.appendDummyInput()
         .appendField("forward");
     this.setPreviousStatement(true);
@@ -17,7 +17,7 @@ Blockly.JavaScript.move_forward = function() {
 
 Blockly.Blocks.move_backward = {
   init: function() {
-    this.setColour(20);
+    this.setColour(290);
     this.appendDummyInput()
         .appendField("backward");
     this.setPreviousStatement(true);
@@ -80,3 +80,30 @@ Blockly.Blocks.hammer = {
 Blockly.JavaScript.hammer = function() {
   return 'app.game.player.hammer();';
 };
+
+// Stats
+
+function stats(name, title, varName, color) {
+  Blockly.Blocks[name] = {
+    init: function() {
+      this.setColour(color);
+      this.appendDummyInput()
+          .appendField(title);
+      this.setOutput(true);
+      this.setTooltip('');
+    }
+  };
+
+  Blockly.JavaScript[name] = function() {
+    return varName;
+  };
+}
+
+stats('self_hp', 'your hp', 'app.game.player.hp', 20);
+stats('self_ap', 'your ap', 'app.game.player.ap', 210);
+stats('self_pos', 'your position', 'app.game.player.arenaX', 120);
+stats('enemy_hp', 'enemy hp', 'app.game.enemy.hp', 20);
+stats('enemy_ap', 'enemy ap', 'app.game.enemy.ap', 210);
+stats('enemy_pos', 'enemy position', 'app.game.enemy.arenaX', 120);
+stats('enemy_dist', 'enemy distance', 'app.game.enemy.dist()', 160);
+

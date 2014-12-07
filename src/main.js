@@ -42,7 +42,8 @@ App.prototype.preload = function() {
 
 App.prototype.create = function() {
   this.game.physics.startSystem(Phaser.Physics.ARCADE);
-  this.game.player = new Robot(this.game, 0, this.game.world.bounds.bottom);
+  this.game.player = new Robot(this.game, 10, this.game.world.bounds.bottom);
+  this.game.player.move(2);
   this.game.add.existing(this.game.player);
   this.game.physics.arcade.enable(this.game.player);
 };
@@ -59,6 +60,7 @@ App.prototype.toggleEdit = function() {
 
 App.prototype.test = function() {
   var code = Blockly.JavaScript.workspaceToCode();
+  console.log("RUNNING", code);
   eval(code);
 };
 
