@@ -6,8 +6,8 @@ function dot(game, parent) {
   parent.add(g);
 }
 
-var Robot = function(game, enemy) {
-  this.initX = enemy ? 310 : 10;
+var Robot = function(game, ai) {
+  this.initX = ai ? 310 : 10;
   this.initY = game.world.bounds.bottom - 24;
 
   Phaser.Sprite.call(this, game, this.initX, this.initY, 'body');
@@ -34,11 +34,11 @@ var Robot = function(game, enemy) {
   this.hp = 100;
   this.ap = 10;
   this.maxAP = 15;
-  this.enemy = enemy;
+  this.ai = ai;
   this.actions = [];
 
-  // Enemy
-  if (this.enemy) {
+  // AI
+  if (this.ai) {
     this.scale.x *= -1;
     this.angle *= -1;
   }
@@ -77,6 +77,15 @@ Robot.prototype.doActions = function(actions, done) {
     if (success !== false) {
       this.ap -= func.cost;
     }
+    if (func.dmg && func.dmg > 0) {
+      if (this.enemyDist() <= func.reqDist) {
+        var enemy = this.game[
+          this.ai ? 'player' : 'ai'
+        ];
+        enemy.hp -= func.dmg;
+        enemy.hp = enemy.hp < 0 ? 0 : enemy.hp;
+      }
+    }
     this.doActions(actions, done);
   }));
   return this;
@@ -97,7 +106,7 @@ Robot.prototype.fight = function(done) {
 
 Robot.prototype.enemyDist = function() {
   return 8 - this.game[
-    this.enemy ? 'player' : 'enemy'
+    this.ai ? 'player' : 'ai'
   ].arenaX - this.arenaX;
 };
 
@@ -106,13 +115,13 @@ Robot.prototype.enemyDist = function() {
 Robot.prototype.move = function(arenaX, next) {
   next = next || function() {};
   var maxArenaX = 8 - this.game[
-    this.enemy ? 'player' : 'enemy'
+    this.ai ? 'player' : 'ai'
   ].arenaX;
   if (arenaX < 0 || arenaX > maxArenaX) {
     next.call(this, false);
     return;
   }
-  var f = this.enemy ? -1 : 1;
+  var f = this.ai ? -1 : 1;
   this.game.add.tween(this).to(
     {angle: f * 30}, 500, Phaser.Easing.Quadratic.InOut
   ).to(
@@ -159,6 +168,8 @@ Robot.prototype.punch = function(next) {
   return this;
 };
 Robot.prototype.punch.cost = 8;
+Robot.prototype.punch.dmg = 8;
+Robot.prototype.punch.reqDist = 1;
 
 Robot.prototype.hammer = function(next) {
   next = next || function() {};
@@ -181,5 +192,7 @@ Robot.prototype.hammer = function(next) {
   return this;
 };
 Robot.prototype.hammer.cost = 10;
+Robot.prototype.hammer.dmg = 12;
+Robot.prototype.hammer.reqDist = 1;
 
 module.exports = Robot;

@@ -23,8 +23,8 @@ var App = function() {
   this.editPane = document.getElementById('edit');
   document.getElementById('toggle-edit')
     .addEventListener('click', this.toggleEdit.bind(this));
-  document.getElementById('test')
-    .addEventListener('click', this.test.bind(this));
+  document.getElementById('fight')
+    .addEventListener('click', this.startFight.bind(this));
   return this;
 };
 
@@ -49,16 +49,24 @@ App.prototype.preload = function() {
 
 App.prototype.create = function() {
   this.game.add.sprite(0, 0, 'bg');
+  this.game.title = this.game.add.text(
+    this.game.world.width / 2,
+    this.game.world.height / 2,
+    'ROBATTLER', {
+      font: '20pt Silkscreen',
+      fill: '#66f'
+    });
+  this.game.title.anchor.set(0.5, 0.5);
 
-  this.game.enemy = new Robot(this.game, true);
-  this.game.add.existing(this.game.enemy);
+  this.game.ai = new Robot(this.game, true);
+  this.game.add.existing(this.game.ai);
 
-  this.game.enemyHP = new Bar(
-    this.game, this.game.enemy, 'hp', true);
-  this.game.add.existing(this.game.enemyHP);
-  this.game.enemyAP = new Bar(
-    this.game, this.game.enemy, 'ap', true);
-  this.game.add.existing(this.game.enemyAP);
+  this.game.aiHP = new Bar(
+    this.game, this.game.ai, 'hp', true);
+  this.game.add.existing(this.game.aiHP);
+  this.game.aiAP = new Bar(
+    this.game, this.game.ai, 'ap', true);
+  this.game.add.existing(this.game.aiAP);
 
   this.game.player = new Robot(this.game);
   this.game.add.existing(this.game.player);
@@ -70,16 +78,21 @@ App.prototype.create = function() {
   this.game.add.existing(this.game.playerAP);
 
   this.game.player.move(2);
-  this.game.enemy.move(2);
+  this.game.ai.move(2);
 
-  this.game.enemy.code = (
-    'app.game.enemy.addAction("moveForward");' +
-    'app.game.enemy.addAction("punch");' +
-    'app.game.enemy.addAction("moveBackward");'
+  this.game.ai.code = (
+    'app.game.ai.addAction("moveForward");' +
+    'app.game.ai.addAction("punch");' +
+    'app.game.ai.addAction("moveBackward");'
   );
 };
 
-App.prototype.update = function() {};
+App.prototype.update = function() {
+  var c = Math.sin(2.5 * this.game.time.totalElapsedSeconds());
+  var s = Math.abs(0.2 * c) + 1.5;
+  this.game.title.scale.set(s, s);
+  this.game.title.angle = 5 * c;
+};
 App.prototype.render = function() {};
 
 // DOM Methods
@@ -88,25 +101,45 @@ App.prototype.toggleEdit = function() {
   this.editPane.classList.toggle('toggled');
 };
 
-App.prototype.test = function() {
+App.prototype.startFight = function() {
+  this.game.title.setText('ROBATTLER');
+  this.game.player.hp = 100;
+  this.game.player.ap = 10;
+  this.game.ai.hp = 100;
+  this.game.ai.ap = 10;
   var code = Blockly.JavaScript.workspaceToCode();
   console.log("ROBOT CODE", code);
   this.game.player.code = code;
-  this.fightTilDeath();
+  this.fight();
 };
 
 App.prototype.checkTurn = function() {
   this.tickTurns -= 1;
   if (this.tickTurns === 0) {
-    this.fightTilDeath();
+    var win = this.game.ai.hp === 0;
+    var lose = this.game.player.hp === 0;
+    var draw = win && lose;
+    if (win || lose || draw) {
+      this.game.player.move(2);
+      this.game.ai.move(2);
+      switch (true) {
+        case draw:
+          return this.game.title.setText('DRAW!');
+        case win:
+          return this.game.title.setText('YOU WIN!');
+        case lose:
+          return this.game.title.setText('YOU LOSE');
+      }
+    }
+    this.fight();
   }
 };
 
-App.prototype.fightTilDeath = function() {
+App.prototype.fight = function() {
   this.tickTurns = 2;
   var checkTurn = this.checkTurn.bind(this);
   this.game.player.fight(checkTurn);
-  this.game.enemy.fight(checkTurn);
+  this.game.ai.fight(checkTurn);
 };
 
 module.exports = (function() {
