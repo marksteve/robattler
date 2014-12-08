@@ -104,6 +104,12 @@ We think this thing could be a hella lotta fun once polished.
 
 ##Screenshots
 
+![title](assets/screenshots/title.png)
+
+![code](assets/screenshots/code.png)
+
+![battle](assets/screenshots/battle.png)
+
 ## API's used
 
 - Phaser
