@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  {# Check for errors. #}
+  {% if result.error %}
+    <h2>Damn that error: {{ result.error.message }}</h2>
+  {% endif %}
+
+  {# Welcome the user. #}
+  {% if result.user %}
+    <h1>Hi {{ result.user.name }}</h1>
+    <h2>Your id is: {{ result.user.id }}</h2>
+    <h2>Your email is: {{ result.user.email }}</h2>
+  {% endif %}
+
+  {% if result.user.credentials %}
+
+    {% if result.provider.name == 'fb' %}
+      Your are logged in with Facebook.<br />
+      <h2><img id="profile-pic" src="http://graph.facebook.com/{{result.user.id}}/picture?type=normal"></h2>
+    {% endif %}{# result.provider.name == 'fb' #}
+
+    {# Do the same for Twitter. #}
+    {% if result.provider.name == 'tw' %}
+      Your are logged in with Twitter.<br />
+    {% endif %}{# result.provider.name == 'tw' #}
+  {% else %}
+  <h2><img id="profile-pic" src="{{ result.user.picture }}"></h2>
+  {% endif %}{# result.user.credentials #}
+  <script type="text/javascript" src="{{url_for('static', filename='assets/js/close-pixelate.js')}}"></script>
+</body>
+</html>

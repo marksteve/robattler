@@ -1,6 +1,7 @@
 require('./blocks.js');
 
-var Robot = require('./robot');
+var Robot = require('./robot');;
+var Menu = require('./menu')
 
 var App = function() {
   this.game = new Phaser.Game(
