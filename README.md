@@ -1,5 +1,7 @@
 # Robattler
 
+![Koding hackathon participant](assets/badge.png)
+
 ##Description
 
 Robattler is a 2D fighting game where players battle with robots in single combat. These robots are controlled by scripts that the players write through __code blocks__.
@@ -104,11 +106,11 @@ We think this thing could be a hella lotta fun once polished.
 
 ##Screenshots
 
-![title](assets/screenshots/title.png)
+![Title](assets/screenshots/title.png)
 
-![code](assets/screenshots/code.png)
+![Code](assets/screenshots/code.png)
 
-![battle](assets/screenshots/battle.png)
+![Battle](assets/screenshots/battle.png)
 
 ## API's used
 
