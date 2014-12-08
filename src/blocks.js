@@ -4,7 +4,7 @@ Blockly.Blocks.move_forward = {
   init: function() {
     this.setColour(290);
     this.appendDummyInput()
-        .appendField("forward");
+        .appendField("move forward 5AP");
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip('');   this.setTooltip('');
@@ -19,7 +19,7 @@ Blockly.Blocks.move_backward = {
   init: function() {
     this.setColour(290);
     this.appendDummyInput()
-        .appendField("backward");
+        .appendField("move backward 5AP");
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip('');
@@ -55,7 +55,7 @@ Blockly.Blocks.punch = {
   init: function() {
     this.setColour(20);
     this.appendDummyInput()
-        .appendField("punch");
+        .appendField("punch 5AP");
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip('');
@@ -70,7 +70,7 @@ Blockly.Blocks.hammer = {
   init: function() {
     this.setColour(20);
     this.appendDummyInput()
-        .appendField("hammer");
+        .appendField("hammer 10AP");
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip('');
