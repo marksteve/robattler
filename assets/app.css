@@ -50,11 +50,9 @@ button:hover {
 }
 #toggle-edit {
   margin-left: 20px;
-}
-#fight {
   background: forestgreen;
 }
-#fight:hover {
+#toggle-edit:hover {
   background: limegreen;
 }
 .github {
