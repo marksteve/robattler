@@ -93,6 +93,7 @@ Robot.prototype.doActions = function(actions, done) {
 };
 
 Robot.prototype.fight = function(done) {
+  this.actions = [];
   eval(this.code);
   this.doActions(this.actions, function() {
     this.actions = [];
