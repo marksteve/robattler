@@ -10,6 +10,7 @@ body {
   background: #333;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 button {
   background: black;
@@ -55,4 +56,7 @@ button:hover {
 }
 #test:hover {
   background: limegreen;
+}
+#stage {
+  height: 100vh;
 }

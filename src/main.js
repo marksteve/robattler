@@ -36,6 +36,7 @@ App.prototype.init = function() {
 
 App.prototype.preload = function() {
   this.stage.backgroundColor = '#ddd';
+  this.stage.disableVisibilityChange = true;
   this.load.image('body', 'assets/body.png');
   this.load.image('shoulder-arm', 'assets/shoulder-arm.png');
   this.load.image('fore-arm', 'assets/fore-arm.png');
@@ -67,6 +68,12 @@ App.prototype.create = function() {
 
   this.game.player.move(2);
   this.game.enemy.move(2);
+
+  this.game.enemy.code = (
+    'app.game.enemy.addAction("moveForward");' +
+    'app.game.enemy.addAction("moveBackward");' +
+    'app.game.enemy.addAction("punch");'
+  );
 };
 
 App.prototype.update = function() {};
@@ -80,8 +87,23 @@ App.prototype.toggleEdit = function() {
 
 App.prototype.test = function() {
   var code = Blockly.JavaScript.workspaceToCode();
-  console.log("RUNNING", code);
-  eval(code);
+  console.log("ROBOT CODE", code);
+  this.game.player.code = code;
+  this.fightTilDeath();
+};
+
+App.prototype.checkTurn = function() {
+  this.tickTurns -= 1;
+  if (this.tickTurns === 0) {
+    this.fightTilDeath();
+  }
+};
+
+App.prototype.fightTilDeath = function() {
+  this.tickTurns = 2;
+  var checkTurn = this.checkTurn.bind(this);
+  this.game.player.fight(checkTurn);
+  this.game.enemy.fight(checkTurn);
 };
 
 module.exports = (function() {

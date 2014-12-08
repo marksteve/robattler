@@ -6,8 +6,7 @@ var Bar = function(game, robot, type, right) {
   this.type = type;
   this.robot = robot;
 
-  this.fill = new Phaser.TileSprite(
-    game, 0, 0, 16, 16, type);
+  this.fill = game.make.tileSprite(0, 0, 16, 16, type);
   this.fill.alpha = 0.4;
   this.fill.width = 0;
   this.addChild(this.fill);

@@ -35,6 +35,7 @@ var Robot = function(game, enemy) {
   this.ap = 10;
   this.maxAP = 15;
   this.enemy = enemy;
+  this.actions = [];
 
   // Enemy
   if (this.enemy) {
@@ -54,36 +55,90 @@ Robot.prototype.update = function() {
   this.position.y = this.initY + dy;
 };
 
-Robot.prototype.move = function(arenaX) {
+// Control
+
+Robot.prototype.addAction = function() {
+  this.actions.push(
+    Array.prototype.slice.call(arguments, 0)
+  );
+  return this;
+};
+
+Robot.prototype.doActions = function(actions, done) {
+  if (actions.length === 0) {
+    return done.call(this);
+  }
+  var action = actions.shift();
+  var func = this[action.shift()];
+  if (this.ap - func.cost < 0) {
+    return done.call(this);
+  }
+  func.apply(this, action.concat(function(success) {
+    if (success !== false) {
+      this.ap -= func.cost;
+    }
+    this.doActions(actions, done);
+  }));
+  return this;
+};
+
+Robot.prototype.fight = function(done) {
+  eval(this.code);
+  this.doActions(this.actions, function() {
+    this.actions = [];
+    this.ap += 10;
+    return done();
+  });
+  return this;
+};
+
+// Stats
+
+Robot.prototype.enemyDist = function() {
+  return 8 - this.game[
+    this.enemy ? 'player' : 'enemy'
+  ].arenaX - this.arenaX;
+};
+
+// Actions
+
+Robot.prototype.move = function(arenaX, next) {
+  next = next || function() {};
   var maxArenaX = 8 - this.game[
     this.enemy ? 'player' : 'enemy'
   ].arenaX;
   if (arenaX < 0 || arenaX > maxArenaX) {
+    next.call(this, false);
     return;
   }
   var f = this.enemy ? -1 : 1;
-  var newX = this.initX + f * arenaX * 30;
-  this.game.add.tween(this).to(
-    {x: newX}, 1000, Phaser.Easing.Quadratic.InOut
-  ).start();
   this.game.add.tween(this).to(
     {angle: f * 30}, 500, Phaser.Easing.Quadratic.InOut
   ).to(
     {angle: f * 15}, 500, Phaser.Easing.Quadratic.InOut
   ).start();
+
+  var newX = this.initX + f * arenaX * 30;
+  this.game.add.tween(this).to(
+    {x: newX}, 1000, Phaser.Easing.Quadratic.InOut
+  ).start().onComplete.add(next, this);
+
   this.arenaX = arenaX;
   return this;
 };
 
-Robot.prototype.moveForward = function(arenaX) {
-  return this.move(this.arenaX + 1);
+Robot.prototype.moveForward = function(next) {
+  return this.move(this.arenaX + 1, next);
 };
+Robot.prototype.moveForward.cost = 5;
 
-Robot.prototype.moveBackward = function(arenaX) {
-  return this.move(this.arenaX - 1);
+Robot.prototype.moveBackward = function(next) {
+  return this.move(this.arenaX - 1, next);
 };
+Robot.prototype.moveBackward.cost = 5;
 
-Robot.prototype.punch = function() {
+Robot.prototype.punch = function(next) {
+  next = next || function() {};
   this.game.add.tween(this.arm).to(
     {angle: -30}, 200, Phaser.Easing.Back.In
   ).to(
@@ -98,12 +153,14 @@ Robot.prototype.punch = function() {
     {angle: -15}, 200, Phaser.Easing.Back.Out
   ).to(
     {angle: -120}, 200, Phaser.Easing.Back.InOut
-  ).start();
+  ).start().onComplete.add(next, this);
 
   return this;
 };
+Robot.prototype.punch.cost = 8;
 
-Robot.prototype.hammer = function() {
+Robot.prototype.hammer = function(next) {
+  next = next || function() {};
   this.game.add.tween(this.arm).to(
     {angle: -220}, 200, Phaser.Easing.Back.In
   ).to(
@@ -118,9 +175,10 @@ Robot.prototype.hammer = function() {
     {angle: -30}, 200, Phaser.Easing.Back.Out, false, 150
   ).to(
     {angle: -120}, 200, Phaser.Easing.Back.InOut, false, 200
-  ).start();
+  ).start().onComplete.add(next, this);
 
   return this;
 };
+Robot.prototype.hammer.cost = 10;
 
 module.exports = Robot;
