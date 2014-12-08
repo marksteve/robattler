@@ -84,6 +84,7 @@ Robot.prototype.doActions = function(actions, done) {
         ];
         enemy.hp -= func.dmg;
         enemy.hp = enemy.hp < 0 ? 0 : enemy.hp;
+        enemy.hurt();
       }
     }
     this.doActions(actions, done);
@@ -167,8 +168,8 @@ Robot.prototype.punch = function(next) {
 
   return this;
 };
-Robot.prototype.punch.cost = 8;
-Robot.prototype.punch.dmg = 8;
+Robot.prototype.punch.cost = 5;
+Robot.prototype.punch.dmg = 6;
 Robot.prototype.punch.reqDist = 1;
 
 Robot.prototype.hammer = function(next) {
@@ -194,5 +195,15 @@ Robot.prototype.hammer = function(next) {
 Robot.prototype.hammer.cost = 10;
 Robot.prototype.hammer.dmg = 12;
 Robot.prototype.hammer.reqDist = 1;
+
+// Reaction
+Robot.prototype.hurt = function() {
+  var f = this.ai ? -1 : 1;
+  this.game.add.tween(this).to(
+    {angle: f * 0}, 500, Phaser.Easing.Quadratic.InOut
+  ).to(
+    {angle: f * 15}, 500, Phaser.Easing.Quadratic.InOut
+  ).start();
+};
 
 module.exports = Robot;
