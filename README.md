@@ -25,39 +25,49 @@ HP stands for hit points. They represent how much damage the robot can take befo
 AP stands for action points. These represent what actions your robot can do per turn. Moving, attacking and blocking consume AP. Think of it as fuel. You replenish 10 AP per turn. You can have a maximum of 15 AP only.
 
 ###Code Blocks
-The robot has the following code blocks categories ready to use in Program Mode: (ignore the ones marked advanced for now, since we have yet to implement this)
+The robot has the following code blocks categories ready to use in Program Mode:
 
 1. Logic - your basic conditional statement: if/else. Example: if enemy distance == 0, punch
-2. Math - numbers you can use almost everywhere!
-3.  Loops - for, while. Example: repeat while your ap >= 10, punch
+2. Loops - for, while. Example: repeat while your AP >= 10, punch
+3. Math - numbers you can use almost everywhere!
 4. Movement (Basic)
     - Forward
     - Back
-5. Actions (Basic)
-    - Block
+5. Arm (Basic)
     - Punch
     - Hammer
-6. Analysis (Basic)
+6. Self (Basic)
+    - HP
+    - AP
+    - Position
+7. Enemy (Basic)
     - HP
     - AP
     - Distance
-    - isBlocking
     - Position
-7. Actions (Advanced)
+
+#### Not yet implemented
+
+These will all be eventually implemented in future releases.
+1. Arm
+    - Block
     - Uppercut
     - Rotate Elbow
     - Rotate Shoulder
     - Fire laser
     - Charge laser
     - Aim laser
-8. Movement (Advanced)
+    - Hammer (unblockable)
+2. Movement
     - Crouch
     - Stand
-9. Analysis (Advanced)
+3. Enemy/Self
     - isCrouching
     - isCharging
     - isRotating
     - isAiming
+4. Concepts
+    - fast attacks interrupts slower attacks
 
 ### Movement
 As you saw in Section 3 in the movement category you have a few commands available. To understand what these do, you must first understand the arena.
@@ -80,12 +90,8 @@ Back to the moves. Each of these will cost you 5 AP.
 
 ### Basic Actions and Combat
 
-1. Block - block punches. Costs 5 AP.
-If you perform movements after this, robot will not return to blocking mode except while crouched.
-If this is the last movement you perform, you will start the next turn already blocking.
-2. Punch - a punch to the head that deals 6 damage. Costs 5 AP.
-Crouch Punch - this may be performed when your robot is crouching. Deals 5 damage. Costs only 5 AP.
-3. Hammer - a hammerfist strike that deals 12 damage. Can't be blocked. Costs 10 AP.
+1. Punch - a quick punch to the head that deals 6 damage. Costs 5 AP.
+2. Hammer - a slow hammerfist strike that deals 12 damage. Costs 10 AP.
 
 ###Analysis
 Each player’s robot may analyze the other in order to try to predict what his or her opponent will do next. Analysis does not cost AP. You can analyze your own robot.
@@ -95,12 +101,18 @@ Most of the items in the analysis section are self explanatory, so example use c
 1. HP - Opponent has only 10 HP left, I should program my robot to move more aggressively.
 2. AP - Opponent has been conserving AP. This means he is a heavy blocker or counter-hitter. I must find holes in his defense or use my laser more.
 3. Distance - Opponent is 3 tiles away. Should expend AP on closing the gap.
+4. Position - current tile opponen is in. Useful for finding out if near a wall/back to the wall.
 
 ###The Future
 
-The vision for Robattler is to make educational games fun again. It will be to be highly customizable (create your own moves) using limb rotation. You will be able to battle other players AI via a VS Mode, tweak your own bot in Program Mode, fight random stock AI and occasionally some other players' AI in Arcade Mode, a profile page for your win/lose/draw rate and of course a leaderboard.
+The vision for Robattler is to make educational games fun again.
+It will be to be highly customizable (create your own moves) using limb rotation.
+You will be able to battle other players AI via a VS Mode, tweak your own bot in Program Mode,
+fight random stock AI and occasionally some other players' AI in Arcade Mode,
+a profile page for your win/lose/draw rate and of course a leaderboard.
 
-We plan to continue development of this game after the hackathon because we had a heck of a lot of fun programming it despite being up in the mountains for a company outing, multiple power outages and threats from typhoon Ruby.
+We plan to continue development of this game after the hackathon because we had a heck of a lot of fun
+programming it despite being up in the mountains for a company outing, multiple power outages and threats from typhoon Ruby.
 
 We think this thing could be a hella lotta fun once polished.
 
