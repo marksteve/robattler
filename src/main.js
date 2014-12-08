@@ -122,6 +122,7 @@ App.prototype.checkTurn = function() {
     if (win || lose || draw) {
       this.game.player.move(2);
       this.game.ai.move(2);
+      document.getElementById('fight').style.display = 'inline-block';
       switch (true) {
         case draw:
           return this.game.title.setText('DRAW!');
@@ -136,6 +137,7 @@ App.prototype.checkTurn = function() {
 };
 
 App.prototype.fight = function() {
+  document.getElementById('fight').style.display = 'none';
   this.tickTurns = 2;
   var checkTurn = this.checkTurn.bind(this);
   this.game.player.fight(checkTurn);
