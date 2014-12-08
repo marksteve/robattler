@@ -1,4 +1,4 @@
-# Robattler
+![Robattler](assets/robattler.png)
 
 ![Koding hackathon participant](assets/badge.png)
 
