@@ -87,6 +87,7 @@ Robot.prototype.fight = function(done) {
   this.doActions(this.actions, function() {
     this.actions = [];
     this.ap += 10;
+    this.ap = this.ap > 0 ? 15 : this.ap;
     return done();
   });
   return this;
