@@ -37,6 +37,7 @@ App.prototype.init = function() {
 App.prototype.preload = function() {
   this.stage.backgroundColor = '#ddd';
   this.stage.disableVisibilityChange = true;
+  this.load.image('bg', 'assets/bg.png');
   this.load.image('body', 'assets/body.png');
   this.load.image('shoulder-arm', 'assets/shoulder-arm.png');
   this.load.image('fore-arm', 'assets/fore-arm.png');
@@ -47,17 +48,10 @@ App.prototype.preload = function() {
 };
 
 App.prototype.create = function() {
-  this.game.player = new Robot(this.game);
-  this.game.add.existing(this.game.player);
+  this.game.add.sprite(0, 0, 'bg');
+
   this.game.enemy = new Robot(this.game, true);
   this.game.add.existing(this.game.enemy);
-
-  this.game.playerHP = new Bar(
-    this.game, this.game.player, 'hp');
-  this.game.add.existing(this.game.playerHP);
-  this.game.playerAP = new Bar(
-    this.game, this.game.player, 'ap');
-  this.game.add.existing(this.game.playerAP);
 
   this.game.enemyHP = new Bar(
     this.game, this.game.enemy, 'hp', true);
@@ -66,13 +60,22 @@ App.prototype.create = function() {
     this.game, this.game.enemy, 'ap', true);
   this.game.add.existing(this.game.enemyAP);
 
+  this.game.player = new Robot(this.game);
+  this.game.add.existing(this.game.player);
+  this.game.playerHP = new Bar(
+    this.game, this.game.player, 'hp');
+  this.game.add.existing(this.game.playerHP);
+  this.game.playerAP = new Bar(
+    this.game, this.game.player, 'ap');
+  this.game.add.existing(this.game.playerAP);
+
   this.game.player.move(2);
   this.game.enemy.move(2);
 
   this.game.enemy.code = (
     'app.game.enemy.addAction("moveForward");' +
-    'app.game.enemy.addAction("moveBackward");' +
-    'app.game.enemy.addAction("punch");'
+    'app.game.enemy.addAction("punch");' +
+    'app.game.enemy.addAction("moveBackward");'
   );
 };
 
