@@ -49,6 +49,7 @@ The robot has the following code blocks categories ready to use in Program Mode:
 #### Not yet implemented
 
 These will all be eventually implemented in future releases.
+
 1. Arm
     - Block
     - Uppercut
