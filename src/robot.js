@@ -107,7 +107,7 @@ Robot.prototype.fight = function(done) {
 // Stats
 
 Robot.prototype.enemyDist = function() {
-  return 8 - this.game[
+  return 9 - this.game[
     this.ai ? 'player' : 'ai'
   ].arenaX - this.arenaX;
 };
