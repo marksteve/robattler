@@ -57,6 +57,16 @@ button:hover {
 #fight:hover {
   background: limegreen;
 }
+.github {
+  text-indent: -10000px;
+  background: url(github.png) no-repeat;
+  width: 64px;
+  height: 64px;
+  display: block;
+  top: 20px;
+  right: 40px;
+  position: absolute;
+}
 #stage {
   height: 100vh;
 }
