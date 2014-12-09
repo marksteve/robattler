@@ -45,6 +45,10 @@ App.prototype.preload = function() {
   this.load.image('hp', 'assets/hp.png');
   this.load.image('ap', 'assets/ap.png');
   this.load.image('brace', 'assets/brace.png');
+  this.load.audio('move_forward', 'assets/move_forward.wav');
+  this.load.audio('move_backward', 'assets/move_backward.wav');
+  this.load.audio('hurt', 'assets/hurt.wav');
+  this.load.audio('punch', 'assets/punch.wav');
 };
 
 App.prototype.create = function() {
@@ -57,6 +61,13 @@ App.prototype.create = function() {
       fill: '#66f'
     });
   this.game.title.anchor.set(0.5, 0.5);
+
+  this.game.sounds = {
+    move_forward: this.game.add.audio('move_forward'),
+    move_backward: this.game.add.audio('move_backward'),
+    punch: this.game.add.audio('punch'),
+    hurt: this.game.add.audio('hurt')
+  };
 
   this.game.ai = new Robot(this.game, true);
   this.game.add.existing(this.game.ai);

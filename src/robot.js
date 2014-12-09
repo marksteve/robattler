@@ -140,17 +140,20 @@ Robot.prototype.move = function(arenaX, next) {
 };
 
 Robot.prototype.moveForward = function(next) {
+  this.game.sounds.move_forward.play();
   return this.move(this.arenaX + 1, next);
 };
 Robot.prototype.moveForward.cost = 5;
 
 Robot.prototype.moveBackward = function(next) {
+  this.game.sounds.move_backward.play();
   return this.move(this.arenaX - 1, next);
 };
 Robot.prototype.moveBackward.cost = 5;
 
 Robot.prototype.punch = function(next) {
   next = next || function() {};
+  this.game.sounds.punch.play();
   this.game.add.tween(this.arm).to(
     {angle: -30}, 200, Phaser.Easing.Back.In
   ).to(
@@ -175,6 +178,7 @@ Robot.prototype.punch.reqDist = 1;
 
 Robot.prototype.hammer = function(next) {
   next = next || function() {};
+  this.game.sounds.punch.play();
   this.game.add.tween(this.arm).to(
     {angle: -220}, 200, Phaser.Easing.Back.In
   ).to(
@@ -199,6 +203,7 @@ Robot.prototype.hammer.reqDist = 1;
 
 // Reaction
 Robot.prototype.hurt = function() {
+  this.game.sounds.hurt.play();
   var f = this.ai ? -1 : 1;
   this.game.add.tween(this).to(
     {angle: f * 0}, 500, Phaser.Easing.Quadratic.InOut
