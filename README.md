@@ -2,7 +2,7 @@
 
 ![Koding hackathon participant](assets/badge.png)
 
-##Description
+## Description
 
 Robattler is a 2D fighting game where players battle with robots in single combat. These robots are controlled by scripts that the players write through __code blocks__.
 
@@ -12,19 +12,19 @@ Tutorials are not implemented yet due to time constraints. The end goal of Robat
 
 ### Getting started
 
-###Stats
+### Stats
 
 Each robot starts with these stats:
  - 100 HP
  - 10 AP
 
-####HP
+#### HP
 HP stands for hit points. They represent how much damage the robot can take before shutting down. You lose HP by getting hit by your opponent's attacks and you inflict damage on your opponent the same way. You win when you reduce your opponent's life to zero.
 
-####AP
+#### AP
 AP stands for action points. These represent what actions your robot can do per turn. Moving, attacking and blocking consume AP. Think of it as fuel. You replenish 10 AP per turn. You can have a maximum of 15 AP only.
 
-###Code Blocks
+### Code Blocks
 The robot has the following code blocks categories ready to use in Program Mode:
 
 1. Logic - your basic conditional statement: if/else. Example: if enemy distance == 0, punch
@@ -73,7 +73,7 @@ These will all be eventually implemented in future releases.
 ### Movement
 As you saw in Section 3 in the movement category you have a few commands available. To understand what these do, you must first understand the arena.
 
-####The Arena
+#### The Arena
 
 The arena is composed of tiles laid out like this:
 PLAYER_ONE 1 2 3 4 5 5 4 3 2 1 PLAYER_TWO
@@ -94,7 +94,7 @@ Back to the moves. Each of these will cost you 5 AP.
 1. Punch - a quick punch to the head that deals 6 damage. Costs 5 AP.
 2. Hammer - a slow hammerfist strike that deals 12 damage. Costs 10 AP.
 
-###Analysis
+### Analysis
 Each player’s robot may analyze the other in order to try to predict what his or her opponent will do next. Analysis does not cost AP. You can analyze your own robot.
 
 Most of the items in the analysis section are self explanatory, so example use cases will be provided here to justify their addition:
@@ -104,7 +104,7 @@ Most of the items in the analysis section are self explanatory, so example use c
 3. Distance - Opponent is 3 tiles away. Should expend AP on closing the gap.
 4. Position - current tile opponen is in. Useful for finding out if near a wall/back to the wall.
 
-###The Future
+### The Future
 
 The vision for Robattler is to make educational games fun again.
 It will be to be highly customizable (create your own moves) using limb rotation.
@@ -117,7 +117,7 @@ programming it despite being up in the mountains for a company outing, multiple 
 
 We think this thing could be a hella lotta fun once polished.
 
-##Screenshots
+## Screenshots
 
 ![Title](assets/screenshots/title.png)
 
